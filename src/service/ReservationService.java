@@ -13,9 +13,9 @@ public class ReservationService {
     static Map<String, IRoom> rooms;
 
     private ReservationService(){
-        this.reservations = new ArrayList<Reservation>();
-        this.rooms = new HashMap<String, IRoom>();
-    };
+        reservations = new ArrayList<>();
+        rooms = new HashMap<>();
+    }
 
     public static ReservationService getInstance(){
         if (reservationService == null){
@@ -33,6 +33,10 @@ public class ReservationService {
         return rooms.get(roomNumber);
     }
 
+    public static Map<String, IRoom> getAllRooms() {
+        return rooms;
+    }
+
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         Reservation newReservation = new Reservation(customer, room, checkInDate, checkOutDate);
         reservations.add(newReservation);
@@ -40,27 +44,26 @@ public class ReservationService {
     }
 
     public Collection<Reservation> getCustomerReservation(Customer customer){
-        ArrayList<Reservation> customerReservations = new ArrayList<Reservation>();
+        ArrayList<Reservation> customerReservations = new ArrayList<>();
         String customerEmail = customer.getEmail();
         reservations.forEach((reservation) -> {
-            if(reservation.getCustomer().getEmail() == customerEmail){
+            if(reservation.getCustomer().getEmail().equals(customerEmail)){
                 customerReservations.add(reservation);
             }
         });
-        return null;
+        return customerReservations;
     }
 
-    //  search for available rooms based on provided checkin and checkout dates.
+    //  search for available rooms based on provided checkIn and checkout dates.
     public Map<String, IRoom> findRooms(Date checkInDate, Date checkOutDate){
-        Map<String, IRoom> availableRooms = new HashMap<String, IRoom>();
-        ArrayList<String> bookedRoomNumbers = new ArrayList<String>();
+        Map<String, IRoom> availableRooms = new HashMap<>();
+        ArrayList<String> bookedRoomNumbers = new ArrayList<>();
 
         reservations.forEach(reservation ->{
             if(Validator.dateIsWithinRange(checkInDate,reservation.getCheckInDate(),reservation.getCheckOutDate()) || Validator.dateIsWithinRange(checkOutDate,reservation.getCheckInDate(),reservation.getCheckOutDate())){
                 bookedRoomNumbers.add(reservation.getRoom().getRoomNumber());
             }
         });
-
 
         rooms.forEach( (key,val)->{
             if(!bookedRoomNumbers.contains(key)){
@@ -70,10 +73,12 @@ public class ReservationService {
         return availableRooms;
     }
 
+    public Collection<Reservation> getAllReservation(){
+        return reservations;
+    }
+
     public void printAllReservation(){
-        reservations.forEach(reservation ->{
-            System.out.println(reservation.toString());
-        });
+        reservations.forEach(reservation-> System.out.println(reservation.toString()));
     }
 
 }

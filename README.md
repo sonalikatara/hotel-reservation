@@ -1,1 +1,1 @@
-# hetol-reservation
+# hotel-reservation

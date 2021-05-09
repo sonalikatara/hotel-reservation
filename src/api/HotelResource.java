@@ -3,12 +3,17 @@ package api;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
+import service.CustomerService;
+import service.ReservationService;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 public class HotelResource {
-    private static HotelResource hotelResource;
+    private static HotelResource hotelResource = null;
+    static CustomerService customerService = CustomerService.getInstance();
+    static ReservationService reservationService = ReservationService.getInstance();
 
     private HotelResource() {}
 
@@ -20,28 +25,30 @@ public class HotelResource {
     }
 
     public Customer getCustomer(String email){
-        return null;
+        return customerService.getCustomer(email);
     }
 
     public void createACustomer(String email, String firstName, String lastName){
-
+         customerService.addCustomer(email,firstName,lastName);
     }
 
     public IRoom getRoom(String roomNumber){
-        return null;
+        return reservationService.getARoom(roomNumber);
     }
 
-    public Reservation bookARoom(String custom, IRoom room, Date checkInDate, Date CheckOutDate){
-
+    public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate){
+        Customer customer = customerService.getCustomer(customerEmail);
+        reservationService.reserveARoom(customer,room,checkInDate,checkOutDate);
         return null;
     }
 
     public Collection<Reservation> getCustomersReservations(String customerEmail){
-        return null;
+        Customer customer = customerService.getCustomer(customerEmail);
+        return reservationService.getCustomerReservation(customer);
     }
 
-    public Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate){
-        return null;
+    public Map<String, IRoom> findARoom(Date checkInDate, Date checkOutDate){
+        return reservationService.findRooms(checkInDate, checkOutDate);
     }
 
 }
