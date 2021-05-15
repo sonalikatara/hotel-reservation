@@ -7,7 +7,6 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 public class AdminResource {

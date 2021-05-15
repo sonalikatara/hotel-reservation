@@ -46,7 +46,7 @@ public class Customer {
 
     @Override
     public String toString(){
-        return "Customer " + firstName + "  " +lastName +" has email id " + email;
+        return "\nFirst Name: " + firstName + "  Last Name: " +lastName +" Email: " + email + "\n";
     }
 
 

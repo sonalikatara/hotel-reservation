@@ -60,7 +60,8 @@ public class ReservationService {
         ArrayList<String> bookedRoomNumbers = new ArrayList<>();
 
         reservations.forEach(reservation ->{
-            if(Validator.dateIsWithinRange(checkInDate,reservation.getCheckInDate(),reservation.getCheckOutDate()) || Validator.dateIsWithinRange(checkOutDate,reservation.getCheckInDate(),reservation.getCheckOutDate())){
+            if(Validator.dateIsWithinRange(reservation.getCheckInDate(),checkInDate,checkOutDate) || Validator.dateIsWithinRange(reservation.getCheckOutDate(),checkInDate,checkOutDate) || ( Validator.dateIsWithinRange(checkInDate,reservation.getCheckInDate(),reservation.getCheckOutDate()) && Validator.dateIsWithinRange(checkOutDate,reservation.getCheckInDate(),reservation.getCheckOutDate())) ){
+              //  System.out.println("booked  room"+ reservation.getRoom().getRoomNumber());
                 bookedRoomNumbers.add(reservation.getRoom().getRoomNumber());
             }
         });

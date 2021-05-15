@@ -39,22 +39,20 @@ public class Reservation {
     }
 
     public Date getCheckOutDate(){
-        return this.checkInDate;
+        return this.checkOutDate;
     }
 
     public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
     }
 
-
-
     @Override
     public String toString(){
-        return "Reservation :: { " +
-                customer.toString() + "\\n" +
-                room.toString() + "\\n" +
-                "check in date : " + checkInDate + "\\n" +
-                "check out date : " + checkOutDate;
+        return "Reservation for " +
+                customer.toString() + " \n" +
+                room.toString() + "\n" +
+                "Checkin date : " + checkInDate + "\n" +
+                "Checkout date : " + checkOutDate;
 
     }
 }

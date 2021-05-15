@@ -1,11 +1,9 @@
 package service;
 import model.Customer;
-import model.IRoom;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 public class CustomerService {
     // create a static variable of type CustomerService
@@ -30,7 +28,12 @@ public class CustomerService {
             customers.add( new Customer(firstName,lastName,email));
     }
 
-    public Customer getCustomer(String customerEmail){
+    public Customer getCustomer(String customerEmail) throws IllegalArgumentException{
+        String emailRegex = "^(.+)@(.+).(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        if(!pattern.matcher(customerEmail).matches()){
+            throw new IllegalArgumentException("Error, Invalid email");
+        };
         Customer found = customers.stream()
                 .filter(customer ->customerEmail.equals(customer.getEmail()))
                 .findAny()

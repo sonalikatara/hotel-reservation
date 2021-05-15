@@ -22,7 +22,7 @@ public class AdminMenu {
         System.out.println("5. Add Test Data");
         System.out.println("6. Back to Main Menu");
         System.out.println("____________________________________________");
-        System.out.println("Please select a number for the menu option");
+        System.out.println("Please select a number for the menu option ");
     }
 
     public static void seeAllCustomers(){
@@ -53,31 +53,41 @@ public class AdminMenu {
         } else System.out.println("There are no reservations yet");
     }
 
-    public static void addARoom(){
-        IRoom room;
-        RoomType roomType = null;
-       // Boolean isFree = true;
+    public static void addARoom() throws Exception {
+        String addRoom = "y";
+        while(addRoom.equals("y")){
+            IRoom room;
+            RoomType roomType = null;
+            // Boolean isFree = true;
+            System.out.println("\nEnter room number:");
+            String roomNumber = input.nextLine();
+            System.out.println("Enter price per night:");
+            Double roomPrice = input.nextDouble();
+            int type;
+            do {
+                System.out.println("Enter room type: 1 - Single bed, 2 - Double bed");
+                type = input.nextInt();
+                if (type == 1) {
+                    roomType = RoomType.SINGLE;
+                } else if (type == 2) {
+                    roomType = RoomType.DOUBLE;
+                } else {
+                    System.out.println("Invalid input");
+                }
+            } while (type != 1 && type != 2);
 
-        input.nextLine();
-        System.out.println("Enter room number:");
-        String roomNumber = input.nextLine();
-        System.out.println("Enter price per night:");
-        Double roomPrice = input.nextDouble();
-        int type;
-        do {
-            System.out.println("Enter room type: 1 - Single bed, 2 - Double bed");
-            type = input.nextInt();
-            if (type == 1) {
-                roomType = RoomType.SINGLE;
-            } else if (type == 2) {
-                roomType = RoomType.DOUBLE;
-            } else {
-                System.out.println("Invalid input");
+            room = new Room(roomNumber, roomPrice, roomType, true);
+            adminResource.addRoom(room);
+            input.nextLine();
+
+            System.out.println("Would you like to add another room (y/n) ? :");
+            addRoom = input.nextLine().toLowerCase().trim();
+            while(!addRoom.equals("y") && !addRoom.equals("n")){
+                System.out.println("Please enter y (yes) or n (no) ");
+                addRoom = input.nextLine().toLowerCase().trim();
             }
-        } while (type != 1 && type != 2);
+        }
 
-        room = new Room(roomNumber, roomPrice, roomType, true);
-        adminResource.addRoom(room);
     }
 
     public static void addATestData(){
@@ -89,26 +99,35 @@ public class AdminMenu {
         String choice;
         do{
             displayMenu();
-            choice = input.next().trim();
-            switch(choice){
-                case "1":
-                    seeAllCustomers();
-                    break;
-                case "2":
-                    seeAllRooms();
-                    break;
-                case "3":
-                    seeAllReservations();
-                    break;
-                case "4":
-                    addARoom();
-                    break;
-                case "5":
-                    addATestData();
-                    break;
-                case "6":
-                    quit=true;
-                    break;
+            choice = input.nextLine().trim();
+            try {
+                switch (choice) {
+                    case "1":
+                        seeAllCustomers();
+                        break;
+                    case "2":
+                        seeAllRooms();
+                        break;
+                    case "3":
+                        seeAllReservations();
+                        break;
+                    case "4":
+                        addARoom();
+                        break;
+                    case "5":
+                        addATestData();
+                        break;
+                    case "6":
+                        MainMenu mainMenu = new MainMenu();
+                        mainMenu.start();
+                        quit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid Option. Please try again!");
+                }
+            } catch (Exception e){
+                System.out.println("Invalid Input. Please try again! ");
+                input.nextLine();
             }
         }
         while(!quit);
