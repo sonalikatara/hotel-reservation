@@ -25,7 +25,8 @@ public class ReservationService {
     }
 
 
-    public void addRoom(IRoom room){
+    public void addRoom(IRoom room) throws Exception{
+        if(getARoom(room.getRoomNumber())!=null) throw new Exception("This room number already exists. Enter a non existing room number!");
         rooms.put(room.getRoomNumber(),room);
     }
 

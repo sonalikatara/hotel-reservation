@@ -28,7 +28,7 @@ public class AdminResource {
         return customerService.getCustomer(email);
     }
 
-    public void addRoom(IRoom room){
+    public void addRoom(IRoom room) throws Exception{
         reservationService.addRoom(room);
     }
 

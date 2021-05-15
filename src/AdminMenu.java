@@ -59,7 +59,7 @@ public class AdminMenu {
             IRoom room;
             RoomType roomType = null;
             // Boolean isFree = true;
-            System.out.println("\nEnter room number:");
+            System.out.println("Enter room number:");
             String roomNumber = input.nextLine();
             System.out.println("Enter price per night:");
             Double roomPrice = input.nextDouble();
@@ -112,7 +112,12 @@ public class AdminMenu {
                         seeAllReservations();
                         break;
                     case "4":
-                        addARoom();
+                        try {
+                            addARoom();
+                        } catch(Exception e){
+                            System.out.println("Unable to add the room. "+ e.getMessage());
+                            input.nextLine();
+                        }
                         break;
                     case "5":
                         addATestData();
