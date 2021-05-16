@@ -22,12 +22,16 @@ public class Room implements IRoom {
         this.roomType = rmTyp;
     }
 
-    public Room(String roomNumber, Double price, RoomType roomType, Boolean isFree) {
+    public Room(String roomNumber, Double price, RoomType roomType) {
         super();
         this.roomNumber = roomNumber;
         this.price = price;
         this.roomType = roomType;
-        this.isFree = isFree;
+        if(this.price==0){
+            this.isFree = true;
+        } else {
+            this.isFree = false;
+        }
     }
 
     @Override

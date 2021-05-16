@@ -1,4 +1,5 @@
 import api.AdminResource;
+import api.HotelResource;
 import model.*;
 
 import java.util.Collection;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 public class AdminMenu {
     static final Scanner input = new Scanner(System.in);
     static AdminResource adminResource =  AdminResource.getInstance();
+    static HotelResource hotelResource = HotelResource.getInstance();
 
     public AdminMenu(){
         super();
@@ -76,7 +78,7 @@ public class AdminMenu {
                 }
             } while (type != 1 && type != 2);
 
-            room = new Room(roomNumber, roomPrice, roomType, true);
+            room = new Room(roomNumber, roomPrice, roomType);
             adminResource.addRoom(room);
             input.nextLine();
 
@@ -91,7 +93,16 @@ public class AdminMenu {
     }
 
     public static void addATestData(){
-      System.out.println("Test data");
+        IRoom room1 =  new Room("100", 0.0, RoomType.SINGLE);
+        IRoom room2 =  new Room("200", 250.0, RoomType.DOUBLE);
+        try {
+            adminResource.addRoom(room1);
+            adminResource.addRoom(room2);
+        } catch(Exception e){
+
+        }
+        hotelResource.createACustomer("john@domain.com","John","Hopkins");
+        System.out.println("Test rooms 100 and 200 added to the system. test account john@domain.com created ");
     }
 
     public static void start() {
