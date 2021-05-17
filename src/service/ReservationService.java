@@ -79,9 +79,12 @@ public class ReservationService {
         return reservations;
     }
 
-    public void printAllReservation(){
+    public static void printAllReservations(){
         reservations.forEach(reservation-> System.out.println(reservation.toString()));
     }
 
+    static void defaultMethod(){
+        System.out.println("This method has default access");
+    }
 }
 

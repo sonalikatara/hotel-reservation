@@ -1,6 +1,7 @@
 import api.AdminResource;
 import api.HotelResource;
 import model.*;
+import service.ReservationService;
 
 import java.util.Collection;
 import java.util.Map;
@@ -49,9 +50,10 @@ public class AdminMenu {
         Collection<Reservation> reservations;
         reservations = adminResource.getAllReservations();
         if (!reservations.isEmpty()) {
-            for (Reservation reservation: reservations) {
+            ReservationService.printAllReservations();
+         /*   for (Reservation reservation: reservations) {
                 System.out.println(reservation.toString());
-            }
+            }*/
         } else System.out.println("There are no reservations yet");
     }
 

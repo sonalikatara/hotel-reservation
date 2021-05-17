@@ -22,7 +22,7 @@ public class Reservation {
         this.customer = customer;
     }
 
-    public IRoom getRoom(){
+   public IRoom getRoom(){
         return this.room;
     }
 
